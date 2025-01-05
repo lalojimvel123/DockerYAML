@@ -1,0 +1,20 @@
+services:
+  nginx:
+    image: lalojimvel/nginx-config:latest # Usa la imagen personalizada 
+    container_name: nginx-config-container
+    ports:
+      - "80:80" # Expone el puerto 80
+    volumes:
+      # Persistencia del archivo de configuración
+      - ./custom_location.conf:/etc/nginx/conf.d/custom_location.conf
+    networks:
+      # Incluye la red existente y una nueva red
+      - local_extra
+      - nginx_network
+    restart: unless-stopped # Reinicia automáticamente el contenedor si falla
+
+networks:
+  local_extra:
+    external: true # Red existente, asegúrate de que ya esté creada en Docker
+  nginx_network:
+    driver: bridge # Nueva red que será creada automáticamente
