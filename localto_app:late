@@ -1,0 +1,14 @@
+services:
+  localto_app:
+    image: localtonet/localto_app:debian_slim  # Imagen de tu contenedor
+    networks:
+      - mi-red-localto
+    environment:
+      - LOCALTO_TOKEN=<token>  # Token de Localtonet
+    restart: unless-stopped  # Reinicia automáticamente si falla
+    stdin_open: true  # Mantiene la entrada estándar abierta
+    tty: true          # Emula un terminal para evitar problemas con TTY
+
+networks:
+  mi-red-localto:
+    external: false  # Crea una red interna para los servicios
